@@ -43,7 +43,12 @@ if [ ! -e /var/www/agroguadalupe/current ]; then
 fi
 
 echo "==> Configuración de Nginx"
-cp /root/agroguadalupe.conf /etc/nginx/sites-available/agroguadalupe.conf
+# No se sobrescribe si ya existe: certbot le añade la parte de HTTPS y se perdería.
+if [ ! -e /etc/nginx/sites-available/agroguadalupe.conf ]; then
+  cp /root/agroguadalupe.conf /etc/nginx/sites-available/agroguadalupe.conf
+else
+  echo "    (ya existe, se conserva la configuración actual con HTTPS)"
+fi
 ln -sfn /etc/nginx/sites-available/agroguadalupe.conf /etc/nginx/sites-enabled/agroguadalupe.conf
 rm -f /etc/nginx/sites-enabled/default
 nginx -t
