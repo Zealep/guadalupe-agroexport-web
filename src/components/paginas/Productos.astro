@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Banner from '../Banner.astro';
+import TarjetaProducto from '../TarjetaProducto.astro';
+import { rutas, t, type Lang } from '../../i18n';
+import { categorias, productosPorCategoria } from '../../data';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tx = t[lang].productos;
+---
+
+<Layout lang={lang} titulo={tx.titulo} alternos={{ es: rutas.es.productos, en: rutas.en.productos }} imagen="/img/sitio/productos.webp">
+  <Banner lang={lang} titulo={tx.titulo} imagen="/img/sitio/productos.webp" />
+
+  <div class="contenedor intro">
+    <p class="texto-grande">{tx.intro}</p>
+  </div>
+
+  {categorias.map((cat, i) => (
+    <section class:list={['seccion', { 'seccion--crema': i % 2 === 1 }]} id={cat.id}>
+      <div class="contenedor">
+        <h2 class="titulo">{cat[lang]}</h2>
+        <div class="rejilla-productos">
+          {productosPorCategoria(cat.id).map((p) => <TarjetaProducto lang={lang} producto={p} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+</Layout>

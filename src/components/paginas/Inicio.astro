@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TarjetaProducto from '../TarjetaProducto.astro';
+import Formulario from '../Formulario.astro';
+import { rutas, t, type Lang } from '../../i18n';
+import { productos, sitio } from '../../data';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tx = t[lang];
+const hero = lang === 'es' ? '/img/sitio/hero.webp' : '/img/sitio/hero-en.webp';
+const marquee = lang === 'es' ? '/img/sitio/marquee-es.svg' : '/img/sitio/marquee-en.svg';
+---
+
+<Layout lang={lang} titulo={sitio.nombre} alternos={{ es: rutas.es.inicio, en: rutas.en.inicio }} headerTransparente>
+  <section class="hero" style={`--fondo: url('${hero}')`}>
+    <div class="contenedor">
+      <h1 set:html={tx.hero.titulo} />
+      <p>{tx.hero.subtitulo}</p>
+      <a class="boton" href={rutas[lang].productos}>{tx.hero.boton}</a>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor dos-columnas">
+      <div>
+        <h2 class="titulo" set:html={tx.empresa.titulo} />
+        <p class="texto-grande">{tx.empresa.texto}</p>
+        <a class="boton boton--borde" href={rutas[lang].nosotros}>{tx.empresa.boton}</a>
+      </div>
+      <img class="redondeada" src="/img/sitio/empresa.webp" alt="" loading="lazy" width="640" height="520" />
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__pista">
+      {Array.from({ length: 8 }).map(() => <img src={marquee} alt="" />)}
+    </div>
+  </div>
+
+  <section class="seccion seccion--crema">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 class="titulo" set:html={tx.destacados.titulo} />
+        <a class="boton boton--borde" href={rutas[lang].productos}>{tx.destacados.boton}</a>
+      </div>
+      <div class="rejilla-productos">
+        {productos.map((p) => <TarjetaProducto lang={lang} producto={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" style="--fondo: url('/img/sitio/contacto.webp')">
+    <div class="contenedor cta__caja">
+      <h2>{tx.suscripcion.titulo}</h2>
+      <p>{tx.suscripcion.texto}</p>
+      <Formulario lang={lang} tipo="suscripcion" />
+    </div>
+  </section>
+</Layout>

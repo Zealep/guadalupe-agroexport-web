@@ -1,0 +1,20 @@
+---
+import { t, urlProducto, type Lang } from '../i18n';
+import type { Producto } from '../data';
+
+interface Props {
+  lang: Lang;
+  producto: Producto;
+}
+
+const { lang, producto } = Astro.props;
+const datos = producto[lang];
+---
+
+<a class="tarjeta" href={urlProducto(lang, datos.slug)}>
+  <div class="tarjeta__img">
+    <img src={`/img/productos/${producto.imagen}`} alt="" loading="lazy" width="320" height="240" />
+  </div>
+  <h3>{datos.nombre}</h3>
+  <span class="tarjeta__link">{t[lang].productos.verDetalle} <span aria-hidden="true">→</span></span>
+</a>

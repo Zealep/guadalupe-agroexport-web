@@ -1,0 +1,57 @@
+---
+import { rutas, t, type Lang, type Pagina } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  alternos: { es: string; en: string };
+  transparente: boolean;
+}
+
+const { lang, alternos, transparente } = Astro.props;
+const actual = Astro.url.pathname;
+const paginas: Pagina[] = ['inicio', 'nosotros', 'productos', 'contacto'];
+const activa = (p: Pagina) =>
+  p === 'inicio' ? actual === rutas[lang].inicio : actual.startsWith(rutas[lang][p]);
+---
+
+<header class:list={['header', { 'header--transparente': transparente }]} data-header>
+  <div class="contenedor header__fila">
+    <a class="header__logo" href={rutas[lang].inicio} aria-label="Agroexportadora Guadalupe">
+      <img class="logo-blanco" src="/img/sitio/logo-blanco.png" alt="" width="180" height="48" />
+      <img class="logo-color" src="/img/sitio/logo-color.png" alt="" width="180" height="48" />
+    </a>
+
+    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label={t[lang].abrirMenu} data-toggle>
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="header__nav" id="menu" aria-label="Principal">
+      <ul>
+        {paginas.map((p) => (
+          <li><a href={rutas[lang][p]} aria-current={activa(p) ? 'page' : undefined}>{t[lang].menu[p]}</a></li>
+        ))}
+      </ul>
+      <div class="idiomas" aria-label={t[lang].idioma}>
+        <a href={alternos.es} hreflang="es" lang="es" aria-current={lang === 'es' ? 'true' : undefined}>ESP</a>
+        <span aria-hidden="true">|</span>
+        <a href={alternos.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>ENG</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const toggle = header.querySelector<HTMLButtonElement>('[data-toggle]')!;
+
+  const alHacerScroll = () => header.classList.toggle('header--scroll', window.scrollY > 40);
+  alHacerScroll();
+  window.addEventListener('scroll', alHacerScroll, { passive: true });
+
+  toggle.addEventListener('click', () => {
+    const abierto = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!abierto));
+    header.classList.toggle('header--abierto', !abierto);
+    document.body.classList.toggle('sin-scroll', !abierto);
+  });
+</script>

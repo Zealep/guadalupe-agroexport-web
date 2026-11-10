@@ -1,0 +1,8 @@
+# Redirecciones de las direcciones de la web anterior (WordPress) a las nuevas.
+/productoscb/              /productos/                  301
+/en/productscb/            /en/products/                301
+/en/home/                  /en/                         301
+/en/productos/paprika-2/   /en/products/paprika/        301
+/en/productos/:slug/       /en/products/:slug/          301
+/wp-admin/*                /                            301
+/wp-login.php              /                            301

@@ -1,0 +1,178 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TarjetaProducto from '../TarjetaProducto.astro';
+import { meses, rutas, t, urlProducto, type Lang } from '../../i18n';
+import { categorias, certificacion, nombreMercado, productos, sitio, whatsappUrl, type Producto } from '../../data';
+
+interface Props {
+  lang: Lang;
+  producto: Producto;
+}
+
+const { lang, producto } = Astro.props;
+const tx = t[lang].productos;
+const datos = producto[lang];
+const categoria = categorias.find((c) => c.id === producto.categoria)!;
+const otros = productos.filter((p) => p.id !== producto.id).slice(0, 4);
+const mensajeWa = lang === 'es' ? `Hola, quisiera una cotización de ${datos.nombre}.` : `Hello, I would like a quote for ${datos.nombre}.`;
+---
+
+<Layout
+  lang={lang}
+  titulo={datos.nombre}
+  descripcion={`${datos.nombre} — ${categoria[lang]}. ${tx.mercados}: ${producto.mercados.map((m) => nombreMercado(m, lang)).join(', ')}.`}
+  imagen={`/img/productos/${producto.banner}`}
+  alternos={{ es: urlProducto('es', producto.es.slug), en: urlProducto('en', producto.en.slug) }}
+>
+  <section class="ficha">
+    <div class="contenedor ficha__grid">
+      <div>
+        <nav class="migas" aria-label="Breadcrumb">
+          <a href={rutas[lang].inicio}>{t[lang].inicio}</a><span aria-hidden="true">›</span>
+          <a href={rutas[lang].productos}>{tx.titulo}</a><span aria-hidden="true">›</span>
+          <span aria-current="page">{datos.nombre}</span>
+        </nav>
+        <p class="ficha__categoria">{categoria[lang]}</p>
+        <h1>{datos.nombre}</h1>
+
+        <dl class="ficha__datos">
+          <div>
+            <img src="/img/sitio/iconp1.png" alt="" width="40" height="40" />
+            <dt>{tx.mercados}</dt>
+            <dd>{producto.mercados.map((m) => nombreMercado(m, lang)).join(', ')}</dd>
+          </div>
+          {datos.presentacion && (
+            <div>
+              <img src="/img/sitio/iconp2.png" alt="" width="40" height="40" />
+              <dt>{tx.presentacion}</dt>
+              <dd>{datos.presentacion.split('\n').map((l) => <span class="linea">{l}</span>)}</dd>
+            </div>
+          )}
+          {datos.variedades && (
+            <div>
+              <img src="/img/sitio/iconp3.png" alt="" width="40" height="40" />
+              <dt>{tx.variedades}</dt>
+              <dd>{datos.variedades}</dd>
+            </div>
+          )}
+          {producto.certificaciones.length > 0 && (
+            <div>
+              <img src="/img/sitio/iconp4.png" alt="" width="40" height="40" />
+              <dt>{tx.certificaciones}</dt>
+              <dd class="ficha__certs">
+                {producto.certificaciones.map((id) => {
+                  const c = certificacion(id);
+                  return c && <img src={`/img/iconos/${c.logo}`} alt={c.nombre} title={c.nombre} />;
+                })}
+              </dd>
+            </div>
+          )}
+        </dl>
+
+        <a class="boton" href={whatsappUrl(sitio.whatsapp, mensajeWa)} target="_blank" rel="noopener">{tx.cotizar}</a>
+      </div>
+      <img class="ficha__imagen" src={`/img/productos/${producto.banner}`} alt={datos.nombre} width="640" height="520" />
+    </div>
+  </section>
+
+  {producto.temporadas.length > 0 && (
+    <section class="seccion">
+      <div class="contenedor">
+        <h2 class="titulo">{tx.cosecha}</h2>
+        <div class="cosecha" data-tabs>
+          {producto.temporadas.length > 1 && (
+            <div class="cosecha__tabs" role="tablist">
+              {producto.temporadas.map((tem, i) => (
+                <button type="button" role="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+                  {tem[lang]}
+                </button>
+              ))}
+            </div>
+          )}
+          {producto.temporadas.map((tem, i) => (
+            <div class="cosecha__meses" role="tabpanel" id={`panel-${i}`} aria-labelledby={producto.temporadas.length > 1 ? `tab-${i}` : undefined} aria-label={producto.temporadas.length > 1 ? undefined : tem[lang]} hidden={i !== 0}>
+              {meses[lang].map((m, j) => {
+                const activo = tem.meses.includes(j + 1);
+                return (
+                  <div class:list={['mes', { 'mes--activo': activo }]}>
+                    <span class="mes__check" aria-hidden="true">{activo ? '✓' : ''}</span>
+                    <span>{m}</span>
+                    <span class="sr-only">{activo ? '(cosecha)' : ''}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {producto.galeria.length > 0 && (
+    <section class="seccion seccion--crema">
+      <div class="contenedor">
+        <h2 class="titulo">{tx.galeria}</h2>
+        <div class="galeria">
+          {producto.galeria.map((img) => (
+            <a href={`/img/productos/${img}`} data-lightbox>
+              <img src={`/img/productos/${img}`} alt={datos.nombre} loading="lazy" width="400" height="300" />
+            </a>
+          ))}
+        </div>
+      </div>
+      <dialog class="lightbox" data-dialog>
+        <form method="dialog"><button aria-label="Cerrar">×</button></form>
+        <img alt="" />
+      </dialog>
+    </section>
+  )}
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="cabecera-seccion">
+        <h2 class="titulo">{tx.otros}</h2>
+        <a class="boton boton--borde" href={rutas[lang].productos}>{tx.volver}</a>
+      </div>
+      <div class="rejilla-productos">
+        {otros.map((p) => <TarjetaProducto lang={lang} producto={p} />)}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Pestañas de temporadas de cosecha
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((caja) => {
+    const tabs = [...caja.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const paneles = [...caja.querySelectorAll<HTMLElement>('[role=tabpanel]')];
+    const activar = (i: number) => {
+      tabs.forEach((tab, j) => {
+        tab.setAttribute('aria-selected', String(i === j));
+        tab.tabIndex = i === j ? 0 : -1;
+      });
+      paneles.forEach((p, j) => (p.hidden = i !== j));
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => activar(i));
+      tab.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        const n = (i + d + tabs.length) % tabs.length;
+        activar(n);
+        tabs[n].focus();
+      });
+    });
+  });
+
+  // Galería: ampliar imagen
+  const dialogo = document.querySelector<HTMLDialogElement>('[data-dialog]');
+  document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (!dialogo) return;
+      e.preventDefault();
+      dialogo.querySelector('img')!.src = a.href;
+      dialogo.showModal();
+    });
+  });
+  dialogo?.addEventListener('click', (e) => e.target === dialogo && dialogo.close());
+</script>

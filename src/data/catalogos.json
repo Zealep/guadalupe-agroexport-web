@@ -1,0 +1,49 @@
+{
+  "mercados": {
+    "us": { "es": "Estados Unidos", "en": "United States" },
+    "mx": { "es": "México", "en": "Mexico" },
+    "ca": { "es": "Canadá", "en": "Canada" },
+    "co": { "es": "Colombia", "en": "Colombia" },
+    "pe": { "es": "Perú", "en": "Peru" },
+    "ec": { "es": "Ecuador", "en": "Ecuador" },
+    "br": { "es": "Brasil", "en": "Brazil" },
+    "es": { "es": "España", "en": "Spain" },
+    "hu": { "es": "Hungría", "en": "Hungary" },
+    "kr": { "es": "Corea", "en": "Korea" },
+    "eu": { "es": "Unión Europea", "en": "European Union" },
+    "uk": { "es": "Reino Unido", "en": "United Kingdom" }
+  },
+  "certificaciones": [
+    { "id": "grasp", "nombre": "GRASP", "logo": "grasp.svg" },
+    { "id": "global", "nombre": "GLOBALG.A.P.", "logo": "global.svg" },
+    { "id": "eu-organic", "nombre": "EU Organic", "logo": "eu-organic.svg" },
+    { "id": "usda", "nombre": "USDA Organic", "logo": "usda.svg" }
+  ],
+  "valores": [
+    {
+      "icono": "honestidad.svg",
+      "es": { "nombre": "Honestidad", "texto": "Actuar con transparencia y veracidad en todas las acciones." },
+      "en": { "nombre": "Honesty", "texto": "Acting with transparency and truthfulness in everything we do." }
+    },
+    {
+      "icono": "innovacion.svg",
+      "es": { "nombre": "Innovación", "texto": "Buscar constantemente nuevas formas de mejorar y adaptarse a los cambios." },
+      "en": { "nombre": "Innovation", "texto": "Constantly seeking new ways to improve and adapt to change." }
+    },
+    {
+      "icono": "calidad.svg",
+      "es": { "nombre": "Calidad", "texto": "Ofrecer productos y servicios de excelencia." },
+      "en": { "nombre": "Quality", "texto": "Offering products and services of excellence." }
+    },
+    {
+      "icono": "sostenibilidad.svg",
+      "es": { "nombre": "Sostenibilidad", "texto": "Actuar de manera responsable con el medio ambiente y la sociedad." },
+      "en": { "nombre": "Sustainability", "texto": "Acting responsibly towards the environment and society." }
+    },
+    {
+      "icono": "responsabilidad.svg",
+      "es": { "nombre": "Responsabilidad", "texto": "Cumplir con los compromisos adquiridos y asumir las consecuencias de las acciones." },
+      "en": { "nombre": "Responsibility", "texto": "Honoring our commitments and taking ownership of our actions." }
+    }
+  ]
+}

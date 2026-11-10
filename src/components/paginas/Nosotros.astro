@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Banner from '../Banner.astro';
+import { rutas, t, type Lang } from '../../i18n';
+import { catalogos } from '../../data';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tx = t[lang].nosotros;
+---
+
+<Layout lang={lang} titulo={tx.titulo} alternos={{ es: rutas.es.nosotros, en: rutas.en.nosotros }} imagen="/img/sitio/nosotros.webp">
+  <Banner lang={lang} titulo={tx.titulo} imagen="/img/sitio/nosotros.webp" />
+
+  <section class="seccion">
+    <div class="contenedor dos-columnas">
+      <div>
+        <h2 class="titulo" set:html={tx.hacemosTitulo} />
+        <p class="texto-grande">{tx.hacemosTexto}</p>
+      </div>
+      <img class="redondeada" src="/img/sitio/hacemos.webp" alt="" loading="lazy" width="640" height="520" />
+    </div>
+  </section>
+
+  <section class="mision-vision">
+    <article class="panel" style="--fondo: url('/img/sitio/mision.webp')">
+      <h2 set:html={tx.misionTitulo} />
+      <p>{tx.misionTexto}</p>
+    </article>
+    <article class="panel" style="--fondo: url('/img/sitio/vision.webp')">
+      <h2 set:html={tx.visionTitulo} />
+      <p>{tx.visionTexto}</p>
+    </article>
+  </section>
+
+  <section class="seccion seccion--crema">
+    <div class="contenedor">
+      <h2 class="titulo titulo--centro" set:html={tx.valoresTitulo} />
+      <ul class="valores">
+        {catalogos.valores.map((v) => (
+          <li>
+            <img src={`/img/iconos/${v.icono}`} alt="" width="64" height="64" loading="lazy" />
+            <h3>{v[lang].nombre}</h3>
+            <p>{v[lang].texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo titulo--centro" set:html={tx.certificacionesTitulo} />
+      <ul class="certificaciones">
+        {catalogos.certificaciones.map((c) => (
+          <li><img src={`/img/iconos/${c.logo}`} alt={c.nombre} title={c.nombre} loading="lazy" /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Layout>

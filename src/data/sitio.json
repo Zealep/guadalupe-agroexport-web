@@ -1,0 +1,33 @@
+{
+  "nombre": "Agroexportadora Guadalupe",
+  "dominio": "https://agroguadalupe.com",
+  "correo": "info@agroguadalupe.com",
+  "whatsapp": "+51 982362513",
+  "redes": {
+    "linkedin": "https://www.linkedin.com/company/agroexportadora-guadalupe-sac",
+    "instagram": "https://www.instagram.com/agroexportadora_guadalupe",
+    "facebook": ""
+  },
+  "sedes": [
+    {
+      "id": "oficina",
+      "nombre": { "es": "Oficina Lima", "en": "Lima Office" },
+      "direccion": "Av. Garcilazo de la Vega 1774 Of. 401 - Lima - Perú",
+      "mapa": "https://maps.app.goo.gl/UAkwKAiJZbr3KUKQ8",
+      "correo": "info@agroguadalupe.com",
+      "whatsapp": "+51 982362513"
+    },
+    {
+      "id": "planta",
+      "nombre": { "es": "Planta Majes", "en": "Majes Plant" },
+      "direccion": "Asnt. B3 Parcela 18 El Pedregal - Majes - Caylloma - Arequipa",
+      "mapa": "https://maps.app.goo.gl/6aGKcyduE2DqFJQu6",
+      "correo": "",
+      "whatsapp": "+51 982362513"
+    }
+  ],
+  "formularios": {
+    "_nota": "Clave gratuita de https://web3forms.com (se crea con el correo info@agroguadalupe.com). Mientras esté vacía, los formularios abren el correo del visitante.",
+    "web3formsKey": ""
+  }
+}

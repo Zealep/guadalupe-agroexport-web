@@ -1,0 +1,93 @@
+---
+// Formulario que envía los mensajes al correo de la empresa mediante Web3Forms
+// (servicio gratuito, sin servidor propio). Configurar la clave en src/data/sitio.json.
+import { t, type Lang } from '../i18n';
+import { sitio } from '../data';
+
+interface Props {
+  lang: Lang;
+  tipo: 'contacto' | 'suscripcion';
+}
+
+const { lang, tipo } = Astro.props;
+const c = t[lang].contacto;
+const asunto = tipo === 'contacto' ? c.asunto : c.asuntoSuscripcion;
+---
+
+<form
+  class:list={['form', `form--${tipo}`]}
+  data-form
+  data-key={sitio.formularios.web3formsKey}
+  data-correo={sitio.correo}
+  data-enviando={t[lang].form.enviando}
+  data-ok={t[lang].form.ok}
+  data-error={t[lang].form.error}
+>
+  <input type="hidden" name="subject" value={asunto} />
+  <input type="hidden" name="from_name" value="agroguadalupe.com" />
+  <input type="checkbox" name="botcheck" class="oculto" tabindex="-1" autocomplete="off" />
+
+  {tipo === 'suscripcion' ? (
+    <div class="form__linea">
+      <label class="sr-only" for="sus-email">{c.correo}</label>
+      <input id="sus-email" type="email" name="email" required placeholder={t[lang].suscripcion.placeholder} autocomplete="email" />
+      <button class="boton" type="submit">{t[lang].suscripcion.boton}</button>
+    </div>
+  ) : (
+    <div class="form__grid">
+      <label>{c.nombre} *<input type="text" name="nombre" required autocomplete="name" /></label>
+      <label>{c.empresa}<input type="text" name="empresa" autocomplete="organization" /></label>
+      <label>{c.correo} *<input type="email" name="email" required autocomplete="email" /></label>
+      <label>{c.telefono} *<input type="tel" name="telefono" required autocomplete="tel" /></label>
+      <label class="form__ancho">{c.pais}<input type="text" name="pais" autocomplete="country-name" /></label>
+      <label class="form__ancho">{c.mensaje}<textarea name="mensaje" rows="4"></textarea></label>
+      <div class="form__ancho"><button class="boton" type="submit">{c.enviar}</button></div>
+    </div>
+  )}
+  <p class="form__estado" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
+    const estado = form.querySelector<HTMLElement>('.form__estado')!;
+    const boton = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const { key, correo, enviando, ok, error } = form.dataset;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const datos = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      if (datos.botcheck) return;
+
+      // Sin clave configurada: abrir el correo del visitante con el mensaje ya escrito.
+      if (!key) {
+        const cuerpo = Object.entries(datos)
+          .filter(([k, v]) => v && !['subject', 'from_name', 'botcheck'].includes(k))
+          .map(([k, v]) => `${k}: ${v}`)
+          .join('\n');
+        window.location.href = `mailto:${correo}?subject=${encodeURIComponent(datos.subject)}&body=${encodeURIComponent(cuerpo)}`;
+        return;
+      }
+
+      boton.disabled = true;
+      estado.className = 'form__estado';
+      estado.textContent = enviando ?? '';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ ...datos, access_key: key, replyto: datos.email }),
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message);
+        form.reset();
+        estado.classList.add('form__estado--ok');
+        estado.textContent = ok ?? '';
+      } catch {
+        estado.classList.add('form__estado--error');
+        estado.textContent = `${error} ${correo}`;
+      } finally {
+        boton.disabled = false;
+      }
+    });
+  });
+</script>

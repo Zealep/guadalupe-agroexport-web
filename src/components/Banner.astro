@@ -1,0 +1,25 @@
+---
+import { rutas, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  titulo: string;
+  imagen: string;
+  // Migas intermedias opcionales, p. ej. [{ texto: 'Productos', href: '/productos/' }]
+  migas?: { texto: string; href: string }[];
+}
+
+const { lang, titulo, imagen, migas = [] } = Astro.props;
+---
+
+<section class="banner" style={`--fondo: url('${imagen}')`}>
+  <div class="contenedor">
+    <nav class="migas" aria-label="Breadcrumb">
+      <a href={rutas[lang].inicio}>{t[lang].inicio}</a>
+      {migas.map((m) => <><span aria-hidden="true">›</span><a href={m.href}>{m.texto}</a></>)}
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">{titulo}</span>
+    </nav>
+    <h1>{titulo}</h1>
+  </div>
+</section>

@@ -1,0 +1,229 @@
+{
+  "_ayuda": "Cada producto tiene su versión en español (es) e inglés (en). 'meses' van del 1 (enero) al 12 (diciembre). 'mercados' y 'certificaciones' usan las claves definidas en catalogos.json. Las imágenes van en public/img/productos/.",
+  "categorias": [
+    { "id": "frescos", "es": "Frescos", "en": "Fresh foods" },
+    { "id": "especias", "es": "Especias y granos", "en": "Spices and grain" }
+  ],
+  "productos": [
+    {
+      "id": "ajos",
+      "categoria": "frescos",
+      "imagen": "ajos-card.png",
+      "banner": "ajos-banner.webp",
+      "galeria": ["ajos-1.webp", "ajos-2.webp", "ajos-3.webp", "ajos-4.webp"],
+      "mercados": ["us", "mx", "ca", "co"],
+      "certificaciones": ["usda"],
+      "temporadas": [
+        { "es": "Semilla china", "en": "Chinese seed", "meses": [1, 2, 3] },
+        { "es": "Semilla Napuri", "en": "Napuri seed", "meses": [1, 2, 3, 9, 10, 11, 12] },
+        { "es": "Violeta de Primavera", "en": "Spring Violet", "meses": [1, 2, 3, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "ajos",
+        "nombre": "Ajos",
+        "presentacion": "Ajo entero: cajas de cartón, 30 lb, 10 kg\nAjo industrial: sacos de malla de 20 kg, 25 kg",
+        "variedades": "Semilla china (blanca y morada), semilla Napuri, Violeta de Primavera"
+      },
+      "en": {
+        "slug": "garlic",
+        "nombre": "Garlic",
+        "presentacion": "Whole garlic: carton boxes, 30 lb, 10 kg\nIndustrial garlic: mesh sacks 20 kg, 25 kg",
+        "variedades": "Chinese seed (white and purple), Napuri seed, Spring Violet"
+      }
+    },
+    {
+      "id": "uvas",
+      "categoria": "frescos",
+      "imagen": "uvas-card.png",
+      "banner": "uvas-banner.webp",
+      "galeria": [],
+      "mercados": ["us", "mx", "co", "eu", "uk"],
+      "certificaciones": ["global"],
+      "temporadas": [
+        { "es": "Red Globe", "en": "Red Globe", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+        { "es": "Seedless green", "en": "Seedless green", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "uvas",
+        "nombre": "Uvas",
+        "presentacion": "Cajas de plástico de 8,2 kg",
+        "variedades": "Red Globe / Seedless green"
+      },
+      "en": {
+        "slug": "grapes",
+        "nombre": "Grapes",
+        "presentacion": "8.2 kg plastic boxes",
+        "variedades": "Red Globe / Seedless green"
+      }
+    },
+    {
+      "id": "mandarina",
+      "categoria": "frescos",
+      "imagen": "mandarina-card.png",
+      "banner": "mandarina-banner.webp",
+      "galeria": ["mandarina-1.webp", "mandarina-2.webp", "mandarina-3.webp", "mandarina-4.webp"],
+      "mercados": ["us", "mx", "ca"],
+      "certificaciones": [],
+      "temporadas": [
+        { "es": "W. Murcott", "en": "W. Murcott", "meses": [4, 5, 6, 7, 8, 9, 10, 11] }
+      ],
+      "es": {
+        "slug": "mandarina",
+        "nombre": "Mandarina",
+        "presentacion": "Cajas de cartón de 10 kg y 15 kg",
+        "variedades": "W. Murcott"
+      },
+      "en": {
+        "slug": "tangerines",
+        "nombre": "Tangerines",
+        "presentacion": "Carton boxes of 10 kg and 15 kg",
+        "variedades": "W. Murcott"
+      }
+    },
+    {
+      "id": "jengibre",
+      "categoria": "frescos",
+      "imagen": "jengibre-card.png",
+      "banner": "jengibre-banner.webp",
+      "galeria": ["jengibre-1.webp", "jengibre-2.webp", "jengibre-3.webp", "jengibre-4.webp"],
+      "mercados": ["us", "ca", "eu"],
+      "certificaciones": ["usda", "eu-organic"],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "jengibre",
+        "nombre": "Jengibre",
+        "presentacion": "Jengibre entero: cajas de cartón, 30 lb\nJengibre industrial: sacos de malla de 20 kg, 25 kg",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "ginger",
+        "nombre": "Ginger",
+        "presentacion": "Whole ginger: carton boxes, 30 lb\nIndustrial ginger: mesh sacks 20 kg, 25 kg",
+        "variedades": ""
+      }
+    },
+    {
+      "id": "curcuma",
+      "categoria": "frescos",
+      "imagen": "curcuma-card.png",
+      "banner": "curcuma-banner.webp",
+      "galeria": ["curcuma-1.webp", "curcuma-2.webp", "curcuma-3.webp", "curcuma-4.webp"],
+      "mercados": ["us", "ca", "eu"],
+      "certificaciones": ["eu-organic", "usda"],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "curcuma",
+        "nombre": "Cúrcuma",
+        "_revisar": "En la web anterior este texto decía 'Jengibre'. Confirmar la presentación real de la cúrcuma.",
+        "presentacion": "Jengibre entero: cajas de cartón, 30 lb\nJengibre industrial: sacos de malla de 20 kg, 25 kg",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "turmeric",
+        "nombre": "Turmeric",
+        "presentacion": "Whole ginger: carton boxes, 30 lb\nIndustrial ginger: mesh sacks 20 kg, 25 kg",
+        "variedades": ""
+      }
+    },
+    {
+      "id": "jengibre-deshidratado",
+      "categoria": "especias",
+      "imagen": "jengibre-deshidratado-card.png",
+      "banner": "jengibre-deshidratado-banner.webp",
+      "galeria": ["jengibre-deshidratado-1.webp", "jengibre-deshidratado-2.webp", "jengibre-deshidratado-3.webp", "jengibre-deshidratado-4.webp"],
+      "mercados": ["us", "mx", "es", "hu", "kr"],
+      "certificaciones": ["eu-organic", "usda"],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "jengibre-deshidratado",
+        "nombre": "Jengibre deshidratado",
+        "presentacion": "Sacos de papel o polietileno de 20 kg - 22 kg",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "dry-ginger-flakes",
+        "nombre": "Dry Ginger Flakes",
+        "presentacion": "Paper or polyethylene sacks 20 kg - 22 kg",
+        "variedades": ""
+      }
+    },
+    {
+      "id": "curcuma-deshidratada",
+      "categoria": "especias",
+      "imagen": "curcuma-deshidratada-card.png",
+      "banner": "curcuma-deshidratada-banner.webp",
+      "galeria": ["curcuma-deshidratada-1.webp", "curcuma-deshidratada-2.webp", "curcuma-deshidratada-3.webp", "curcuma-deshidratada-4.webp"],
+      "mercados": ["us", "mx", "es", "hu", "kr"],
+      "certificaciones": ["eu-organic", "usda"],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "curcuma-deshidratada",
+        "nombre": "Cúrcuma deshidratada",
+        "presentacion": "Sacos de papel o de polietileno de 20 kg - 22 kg",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "dry-turmeric",
+        "nombre": "Dry Turmeric",
+        "presentacion": "Paper or polyethylene sacks 20 kg - 22 kg",
+        "variedades": ""
+      }
+    },
+    {
+      "id": "paprika",
+      "categoria": "especias",
+      "imagen": "paprika-card.png",
+      "banner": "paprika-banner.webp",
+      "galeria": ["paprika-1.webp", "paprika-2.webp", "paprika-3.webp"],
+      "mercados": ["us", "mx", "es"],
+      "certificaciones": ["eu-organic", "usda"],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "paprika",
+        "nombre": "Páprika",
+        "presentacion": "Cajas de cartón de 11.34 kg, sacos grandes",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "paprika",
+        "nombre": "Paprika",
+        "presentacion": "Carton boxes 11.34 kg, big sacks",
+        "variedades": ""
+      }
+    },
+    {
+      "id": "quinua",
+      "categoria": "especias",
+      "imagen": "quinua-card.png",
+      "banner": "quinua-banner.webp",
+      "galeria": ["quinua-1.webp", "quinua-2.webp", "quinua-3.webp", "quinua-4.webp"],
+      "mercados": ["us", "mx", "ca", "es"],
+      "certificaciones": [],
+      "temporadas": [
+        { "es": "Temporada de cosecha", "en": "Harvest season", "meses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "es": {
+        "slug": "quinua",
+        "nombre": "Quinua",
+        "presentacion": "Sacos de papel o bolsas grandes",
+        "variedades": ""
+      },
+      "en": {
+        "slug": "quinoa",
+        "nombre": "Quinoa",
+        "presentacion": "Paper sacks or big bags",
+        "variedades": ""
+      }
+    }
+  ]
+}

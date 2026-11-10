@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Banner from '../Banner.astro';
+import Formulario from '../Formulario.astro';
+import { rutas, t, type Lang } from '../../i18n';
+import { sitio, whatsappUrl } from '../../data';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tx = t[lang].contacto;
+---
+
+<Layout lang={lang} titulo={tx.titulo} alternos={{ es: rutas.es.contacto, en: rutas.en.contacto }} imagen="/img/sitio/contactobanner.webp">
+  <Banner lang={lang} titulo={tx.titulo} imagen="/img/sitio/contactobanner.webp" />
+
+  <section class="seccion">
+    <div class="contenedor contacto">
+      <div>
+        <p class="texto-grande">{tx.intro}</p>
+        {sitio.sedes.map((s) => (
+          <article class="sede">
+            <h2>{s.nombre[lang]}</h2>
+            <p>{s.direccion}</p>
+            <ul>
+              {s.correo && <li><a href={`mailto:${s.correo}`}>{s.correo}</a></li>}
+              {s.whatsapp && <li><a href={whatsappUrl(s.whatsapp)} target="_blank" rel="noopener">WhatsApp {s.whatsapp}</a></li>}
+              {s.mapa && <li><a href={s.mapa} target="_blank" rel="noopener">{tx.verMapa} ↗</a></li>}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <div class="contacto__form">
+        <h2>{tx.formTitulo}</h2>
+        <Formulario lang={lang} tipo="contacto" />
+      </div>
+    </div>
+  </section>
+</Layout>
