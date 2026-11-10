@@ -57,6 +57,47 @@ Mientras la clave esté vacía, al enviar se abre el programa de correo del visi
 El archivo `public/_redirects` redirige las direcciones antiguas de WordPress (p. ej. `/productoscb/`, `/en/productos/garlic/`)
 a las nuevas, para no perder posicionamiento en Google.
 
+## Publicar en un droplet de DigitalOcean (alternativa a Netlify)
+
+Los archivos están en `deploy/`. El servidor solo necesita Nginx: la web se compila en tu PC.
+
+**Una sola vez** (preparar el servidor; usa Git Bash en tu PC):
+
+```bash
+scp deploy/preparar-servidor.sh deploy/agroguadalupe.conf root@IP_DEL_DROPLET:/root/
+ssh root@IP_DEL_DROPLET "bash /root/preparar-servidor.sh"
+```
+
+Instala Nginx, Certbot, el firewall, 2 GB de swap y las actualizaciones de seguridad automáticas.
+
+**Cada vez que cambies algo:**
+
+```bash
+bash deploy/publicar.sh IP_DEL_DROPLET
+```
+
+**Dominio y HTTPS:** en el panel del dominio pon los registros `A` de `@` y `www` con la IP del droplet
+(⚠️ sin tocar `MX` ni `TXT`). Cuando ya apunten al droplet, en el servidor:
+
+```bash
+certbot --nginx -d agroguadalupe.com -d www.agroguadalupe.com --redirect
+```
+
+**Volver a la versión anterior** (en el servidor):
+
+```bash
+ls -1t /var/www/agroguadalupe/releases          # la 2.ª de la lista es la anterior
+ln -sfn /var/www/agroguadalupe/releases/NOMBRE /var/www/agroguadalupe/current
+```
+
+### Si el droplet se comparte con otras apps (p. ej. la app Flutter con PostgreSQL)
+
+- Nginx del servidor es la única entrada (puertos 80/443). Cada app va en su propio subdominio con su archivo en
+  `/etc/nginx/sites-available/`, y sus contenedores escuchan solo en local, p. ej. `127.0.0.1:8080:8080`.
+- En `docker-compose` **nunca** publiques `5432:5432`: Docker se salta el firewall y la base de datos quedaría
+  expuesta a internet. Si hace falta, usa `127.0.0.1:5432:5432`.
+- Haz copias de la base de datos (`pg_dump`) y activa los Backups del droplet.
+
 ## Estructura
 
 ```
